@@ -16,10 +16,12 @@ export  const Register = () => {
       const url = "https://cowtwin.onrender.com/create-user"
       if(password && password.length >= 8){
         const data = {
-          password
+          password,
+          createdAt: Date.now()
         }
         const response = await axios.post(url, data)
-        console.log(response)
+        const userId  = response.data.id
+        console.log(userId)
       }else{
         alert('A sua senha  precisa ter 8 caracteres')
       }
