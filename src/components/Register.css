@@ -29,6 +29,9 @@ body {
 
 
 }
+p Link, a{
+    text-decoration: none;
+}
 
 .inicio {
   margin: 0 0 90px 0;
