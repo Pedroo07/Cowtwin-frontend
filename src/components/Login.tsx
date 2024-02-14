@@ -1,9 +1,30 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Login.css'
+import axios from 'axios'
 
 export const Login = () => {
-    const [isActive,setIsActive] = useState(true)
+  const [isActive,setIsActive] = useState(true)
+  const [password, setPassword] = useState<string>()
+
+  const handleLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const pass = event.target.value
+    setPassword(pass)
+  }
+  const handleButtonClick  = async () => {
+    const url = "https://cowtwin.onrender.com/login-user"
+    if(password && password.length >= 8){
+      const data = {
+        password
+      }
+      const response = await axios.post(url, data)
+      console.log(response)
+    }else{
+      alert('a senha  precisa ter 8  caracteres')
+    }
+    
+  }
+   
 
   const alterarModo = () => {
      setIsActive(!isActive)
@@ -34,9 +55,9 @@ export const Login = () => {
 
         <div className='login'>
           <div>
-            <input type="password" placeholder="Senha" />
+            <input type="password" placeholder="Senha" onChange={handleLogin}/>
           </div>
-          <button className='get-btn'>Login</button>
+          <button className='get-btn' onClick={handleButtonClick}>Login</button>
         </div>
       </section>
     </main>

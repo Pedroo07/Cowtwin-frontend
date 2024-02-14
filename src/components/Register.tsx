@@ -1,10 +1,29 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Register.css'
+import axios from 'axios'
 
 export  const Register = () => {
-    const [isActive,setIsActive] = useState(true)
+    const [isActive, setIsActive] = useState(true)
+    const [password, Setpassword] = useState<string>()
+    
+    const handleRegister = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const pass = event.target.value
 
+      Setpassword(pass)
+    }
+    const handleButtonRegister = async () => {
+      const url = "https://cowtwin.onrender.com/create-user"
+      if(password && password.length >= 8){
+        const data = {
+          password
+        }
+        const response = await axios.post(url, data)
+        console.log(response)
+      }else{
+        alert('A sua senha  precisa ter 8 caracteres')
+      }
+    }
   const alterarModo = () => {
      setIsActive(!isActive)
     }
@@ -34,11 +53,9 @@ export  const Register = () => {
 
         <div className='login'>
           <div>
-            <input type="text" placeholder="Nome" />
-            <br />
-            <input type="password" placeholder="Senha" />
+            <input type="password" placeholder="Senha" onChange={handleRegister} />
           </div>
-          <button className='get-btn'>Registre-se</button>
+          <button className='get-btn' onClick={handleButtonRegister}>Registre-se</button>
         </div>
       </section>
     </main>
