@@ -1,27 +1,39 @@
-import App from './App.jsx'
-import './index.css'
-import {Login} from './components/Login'
-import {Register} from './components/Register'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App.tsx'
+import { Login } from './components/Login'
+import { Register } from './components/Register'
+import { createBrowserRouter , RouterProvider} from 'react-router-dom'
 
-import {
-  createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom'
+type RouteConfig = {
+  path: string
+  element: JSX.Element
+  children?: RouteConfig[]
+}
 
-const router = createBrowserRouter([
+const routes: RouteConfig[] = [
   {
-    path:"/",
+    path: "/",
     element: <App />,
     children: [
       {
         path: "/",
-        element: <Login/>
+        element: <Login />
       },
       {
         path: "register",
-        element: <Register/>
+        element: <Register />
       },
     ]
   }
-])
+]
+
+const router = createBrowserRouter(routes)
+
+ReactDOM.render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
+  document.getElementById('root')
+)
 
