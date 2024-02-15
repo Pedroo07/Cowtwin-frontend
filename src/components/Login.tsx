@@ -1,67 +1,68 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLocalStorage } from '@uidotdev/usehooks'
-import './Login.css'
 import axios from 'axios'
+import './Login.css'
 
 export const Login = () => {
   const [isActive, setIsActive] = useState(true)
-  const [password, setPassword] = useState<string>()
+  const [password, setPassword] = useState('')
   const [userId, saveUserId] = useLocalStorage("userId", null)
   const [sessionId, saveSessionId] = useLocalStorage("sessionId", null)
 
   const handleInputEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const pass = event.target.value
-    setPassword(pass)
+    setPassword(event.target.value)
   }
+
+  const validatePassword = (pass: string): boolean => {
+    return !! pass && pass.length >= 8
+  }
+
   const handleButtonRegister = async () => {
     const url = "https://cowtwin.onrender.com/create-user"
-    if (password && password.length >= 8) {
-      const data = {
-        password,
-        createdAt: Date.now()
+    if (validatePassword(password)) {
+      try {
+        const response = await axios.post(url, { password, createdAt: Date.now() })
+        const userId = response.data.id
+        console.log(userId)
+      } catch (error) {
+        alert('Erro ao registrar usuário. Por favor, tente novamente mais tarde.')
       }
-      const response = await axios.post(url, data)
-      const userId = response.data.id
-      console.log(userId)
     } else {
-      alert('A sua senha  precisa ter 8 caracteres')
+      alert('A sua senha precisa ter pelo menos 8 caracteres')
     }
   }
+
   const handleButtonLogin = async () => {
     const url = "https://cowtwin.onrender.com/login-user"
-    if (password && password.length >= 8) {
-      const data = {
-        password
-      }
-      const response = await axios.post(url, data)
-      if (response.data.isValidLogin) {
-        const sessionId = response.data.sessionId
-        const userId = response.data.userId
-        saveUserId(userId)
-        saveSessionId(sessionId)
+    if (validatePassword(password)) {
+      try {
+        const response = await axios.post(url, { password })
+        if (response.data.isValidLogin) {
+          const { sessionId, userId } = response.data
+          saveUserId(userId)
+          saveSessionId(sessionId)
+        } else {
+          alert('Credenciais inválidas. Por favor, verifique sua senha.')
+        }
+      } catch (error) {
+        alert('Erro ao efetuar login. Por favor, tente novamente mais tarde.')
       }
     } else {
-      alert('a senha  precisa ter 8  caracteres')
+      alert('A sua senha precisa ter pelo menos 8 caracteres')
     }
-
   }
 
-
-  const alterarModo = () => {
+  const toggleTheme = () => {
     setIsActive(!isActive)
   }
+
   return (
     <body className={isActive ? 'modoclaro' : ''}>
-
       <main>
         <header className='inicio'>
           <nav>
-            <img src={isActive ? "src/img/sol.png" : "src/img/lua.png"} alt="" className='btn-tema' onClick={alterarModo} />
-            <div>
-              <Link to="/"><button className='stylebuton'>Login</button></Link>
-              <Link to="/register"><button >Registre-se</button></Link>
-            </div>
+            <img src={isActive ? "src/img/sol.png" : "src/img/lua.png"} alt="" className='btn-tema' onClick={toggleTheme} />
           </nav>
         </header>
 
@@ -87,5 +88,4 @@ export const Login = () => {
         </section>
       </main>
     </body>
-  )
-}
+  )}

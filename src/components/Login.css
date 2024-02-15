@@ -29,9 +29,12 @@ body {
 
 
 }
-p Link, a{
-    text-decoration: none;
+
+p Link,
+a {
+  text-decoration: none;
 }
+
 .inicio {
   margin: 0 0 90px 0;
 }
@@ -39,12 +42,14 @@ p Link, a{
 .trocademodos {
   background-image: url(/src/img/lua.png);
 }
-.inicio nav .btn-tema{
+
+.inicio nav .btn-tema {
   cursor: pointer;
   margin: 10px;
   width: 40px;
   height: 40px;
 }
+
 .inicio nav {
   display: flex;
   justify-content: space-between;
@@ -63,16 +68,6 @@ p Link, a{
   background: #ffffff;
   color: #4461F2;
   font-weight: 700;
-}
-
-.inicio nav .stylebuton {
-  background: none;
-  box-shadow: none;
-  border-radius: 0px;
-
-  padding: 0 0 5px 0;
-
-  border-bottom: #4461F2 solid 3px;
 }
 
 #manchamarela {
@@ -109,7 +104,7 @@ p Link, a{
 }
 
 .conteudo div h1 {
-  font-size: 58px;
+  font-size: 3rem;
   font-weight: 700;
 
   padding-bottom: 46px;
@@ -166,14 +161,17 @@ p Link, a{
   font-size: 19px;
   font-weight: 700;
 }
-.btns{
+
+.btns {
   display: flex;
   gap: 5px;
 
 }
-.get-btn{
+
+.get-btn {
   cursor: pointer;
 }
-.get-btn:hover{
-background-color: #3858f7;
+
+.get-btn:hover {
+  background-color: #3858f7;
 }

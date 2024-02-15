@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App.tsx'
 import { Login } from './components/Login'
-import { Register } from './components/Register'
 import { createBrowserRouter , RouterProvider} from 'react-router-dom'
 
 type RouteConfig = {
@@ -19,10 +18,6 @@ const routes: RouteConfig[] = [
       {
         path: "/",
         element: <Login />
-      },
-      {
-        path: "register",
-        element: <Register />
       },
     ]
   }
