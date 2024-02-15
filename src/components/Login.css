@@ -154,7 +154,7 @@ p Link, a{
 }
 
 .login button {
-  width: 400px;
+  width: 50%;
   height: 60px;
 
   border: #4461F2 solid 1px;
@@ -166,6 +166,14 @@ p Link, a{
   font-size: 19px;
   font-weight: 700;
 }
+.btns{
+  display: flex;
+  gap: 5px;
+
+}
 .get-btn{
   cursor: pointer;
+}
+.get-btn:hover{
+background-color: #3858f7;
 }

@@ -10,11 +10,25 @@ export const Login = () => {
   const [userId, saveUserId] = useLocalStorage("userId", null)
   const [sessionId, saveSessionId] = useLocalStorage("sessionId", null)
 
-  const handleLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputEvent = (event: React.ChangeEvent<HTMLInputElement>) => {
     const pass = event.target.value
     setPassword(pass)
   }
-  const handleButtonClick = async () => {
+  const handleButtonRegister = async () => {
+    const url = "https://cowtwin.onrender.com/create-user"
+    if (password && password.length >= 8) {
+      const data = {
+        password,
+        createdAt: Date.now()
+      }
+      const response = await axios.post(url, data)
+      const userId = response.data.id
+      console.log(userId)
+    } else {
+      alert('A sua senha  precisa ter 8 caracteres')
+    }
+  }
+  const handleButtonLogin = async () => {
     const url = "https://cowtwin.onrender.com/login-user"
     if (password && password.length >= 8) {
       const data = {
@@ -63,9 +77,12 @@ export const Login = () => {
 
           <div className='login'>
             <div>
-              <input type="password" placeholder="Senha" onChange={handleLogin} />
+              <input type="password" placeholder="Senha" onChange={handleInputEvent} />
             </div>
-            <button className='get-btn' onClick={handleButtonClick}>Login</button>
+            <div className='btns'>
+              <button className='get-btn' onClick={handleButtonLogin}>Login</button>
+              <button className='get-btn' onClick={handleButtonRegister}>Register</button>
+            </div>
           </div>
         </section>
       </main>
